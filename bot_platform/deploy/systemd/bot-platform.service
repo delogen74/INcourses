@@ -1,0 +1,15 @@
+[Unit]
+Description=Bot Platform Gunicorn
+After=network.target
+
+[Service]
+User=botplatform
+Group=botplatform
+WorkingDirectory=/srv/bot_platform
+EnvironmentFile=/srv/bot_platform/.env
+ExecStart=/srv/bot_platform/.venv/bin/gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker --bind 127.0.0.1:8000 --workers 3
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
